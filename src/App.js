@@ -1,24 +1,33 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
 import './App.css';
+import logo from './images/myntra-logo.png'
+import List from './components/List/List';
+import Login from './components/Login/Login';
+
+export const UserContext = React.createContext()
 
 function App() {
+  const [userData, setUserData] = useState(null)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+        {!userData ? <Login setUserData={setUserData} /> :
+          <><header>
+            <img src={logo} alt="img" />
+            <div className="right-header">
+              <label className="switch">
+                <span className="slider round"></span>
+              </label>
+              <button href="" className="logout-linkButton" onClick={() => setUserData(null)}>Logout</button>
+            </div>
+          </header>
+            <div className="body-container">
+              <UserContext.Provider value={{userData, setUserData}}>
+                <List/>
+              </UserContext.Provider>
+</div>
+          </>
+        }
+      </div>
   );
 }
 
