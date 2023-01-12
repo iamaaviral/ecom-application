@@ -1,10 +1,9 @@
 import React from "react";
+import { CartContext } from "../../context/cartContext";
 import './Product.css';
-import {UserContext} from '../../App'
 
 const Product = ({item})  => {
-    let result = React.useContext(UserContext)
-    console.log(result)
+    let value = React.useContext(CartContext)
     return (
         <div className="each-item">
         <div className="img-wrapper">
@@ -20,13 +19,9 @@ const Product = ({item})  => {
             </h5>
             <button
                 className={`add-to-cart-btn`}
-                // onClick={addItemToCart}
+                onClick={() => value.addToCart(item)}
                 // disabled={added}
             >Add to Cart</button>
-            <h3>{result.userData.name}</h3>
-            <button onClick={() => result.setUserData(null)}>
-                Logout
-            </button>
         </div>
     </div>   
     )
