@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
+import Input from './Input'
 
 const LoginFrom = ({setUserData}) => {
     // const [name, setName] = useState('')
@@ -17,6 +18,14 @@ const LoginFrom = ({setUserData}) => {
     })
     const [errText, setErrorText] = useState('')
 
+    const name = useRef(null)
+    const email = useRef(null)
+
+
+    React.useEffect(() => {
+        name.current.focus()
+    }, [])
+
     const handleInputChange = (e) => {
         setValue({
             ...value,
@@ -34,6 +43,7 @@ const LoginFrom = ({setUserData}) => {
             setErrorText('passwords do not match')
         } else {
             setUserData(value);
+            localStorage.setItem('user', JSON.stringify(value))
             //api call akr do
         }
     }
@@ -42,15 +52,17 @@ const LoginFrom = ({setUserData}) => {
         <form>
             <div className="input_group">
                 <label className="input_label red_star"><span className="label_text">Name</span></label>
-                <input className="input" name="name" required onChange={handleInputChange}  value={value.name}/>
+                {/* <input className="input" ref={name} name="name" required onChange={handleInputChange}  value={value.name}/> */}
+                <Input className="input" ref={name} name="name" required onChange={handleInputChange}  value={value.name}/>
             </div>
             <div className="input_group">
                 <label className="input_label red_star"><span className="label_text">Email</span></label>
-                <input className="input" name="email" required type="email" value={value.email} onChange={handleInputChange} />
+                {/* <input className="input" ref={email} name="email" required type="email" value={value.email} onChange={handleInputChange} /> */}
+                <Input className="input" ref={email} name="email" required type="email" value={value.email} onChange={handleInputChange} />
             </div>
             <div className="input_group">
                 <label className="input_label red_star"><span className="label_text">Password</span></label>
-                <input className="input"  name="pass" type="password" required value={value.pass} onChange={handleInputChange} />
+                <input className="input"  id="pass" name="pass" type="password" required value={value.pass} onChange={handleInputChange} />
             </div>
             <div className="input_group">
                 <label className="input_label red_star"><span className="label_text">Re eneter your password</span></label>
